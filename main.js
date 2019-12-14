@@ -7,12 +7,23 @@ let state = {
 let display = document.getElementById('display');
 
 const buttonPressed = (value) => {
+  if (state.operation == undefined) {
+    state.firstVal = display.innerHTML += value;
+    console.log(`1st`, state.firstVal);
+    display.innerHTML = "";
+    return state.firstVal;
+  } else if (state.operation != undefined) {
+    state.secondVal = display.innerHTML += value;
+    console.log(`2nd`, state.secondVal);
+    return state.secondVal;
+  }
+}
 
-  state.firstVal = display.innerHTML += value;
-  // typeof state.firstVal is string
-  console.log(state.firstVal);
-  // console.log(state.secondVal);
-
+const operator = (value) => {
+  console.log(`operator`);
+  state.operation = !undefined;
+  // do I want to display operator? If so:
+  // display.innerHTML = value;
 }
 
 const reset = () => {
