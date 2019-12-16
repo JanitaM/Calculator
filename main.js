@@ -16,7 +16,6 @@ const buttonPressed = (value) => {
   if (state.operation === undefined) {
     state.firstVal = display.innerHTML += value;
   } else if (state.operation !== undefined) {
-    display.innerHTML = "";
     state.secondVal = display.innerHTML += value;
   }
 
@@ -32,28 +31,30 @@ const operator = (value) => {
 
   if (value === "+" || value === "-" || value === "*" || value === "/") {
     state.operation = value;
-  }
+  } return state;
 }
 
 const equal = (value) => {
   // can I still access state here? yes
   console.log(`eq`, state);
 
-  // cannot access state here
-  let state.firstVal = num1;
-  let state.secondVal = num2;
+  // // can I still access state here? yes but is it needed?
+  let num1 = Number(state.firstVal);
+  let num2 = Number(state.secondVal);
+  // console.log(`num1`, num1, `num2`, num2);
 
-  if (value === "+") {
-    // cannot access state here
+  if (state.operation === "+") {
+    // can I still access state here? yes
     console.log(`v`, num1, num2);
 
-    subtotal = parseFloat(state.firstval) + parseFloat(state.secondVal);
-
+    subtotal = parseFloat(num1 + num2);
     console.log(`sub`, subtotal);
 
     display.innerHTML = subtotal;
 
-  } return display.innerHTML;
+  } return subtotal;
+
+
 }
 
 const reset = () => {
