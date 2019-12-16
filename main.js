@@ -6,24 +6,54 @@ let state = {
 
 let display = document.getElementById('display');
 
+let subtotal = "";
+
 const buttonPressed = (value) => {
-  if (state.operation == undefined) {
+  if (value === "." && display.innerHTML.includes('.')) {
+    return
+  };
+
+  if (state.operation === undefined) {
     state.firstVal = display.innerHTML += value;
-    console.log(`1st`, state.firstVal);
+  } else if (state.operation !== undefined) {
     display.innerHTML = "";
-    return state.firstVal;
-  } else if (state.operation != undefined) {
     state.secondVal = display.innerHTML += value;
-    console.log(`2nd`, state.secondVal);
-    return state.secondVal;
   }
+
+  console.log(`bp`, state);
+  return state;
 }
 
 const operator = (value) => {
-  console.log(`operator`);
-  state.operation = !undefined;
-  // do I want to display operator? If so:
-  // display.innerHTML = value;
+  // can I still access state? yes
+  console.log(`op`, state);
+
+  display.innerHTML = "";
+
+  if (value === "+" || value === "-" || value === "*" || value === "/") {
+    state.operation = value;
+  }
+}
+
+const equal = (value) => {
+  // can I still access state here? yes
+  console.log(`eq`, state);
+
+  // cannot access state here
+  let state.firstVal = num1;
+  let state.secondVal = num2;
+
+  if (value === "+") {
+    // cannot access state here
+    console.log(`v`, num1, num2);
+
+    subtotal = parseFloat(state.firstval) + parseFloat(state.secondVal);
+
+    console.log(`sub`, subtotal);
+
+    display.innerHTML = subtotal;
+
+  } return display.innerHTML;
 }
 
 const reset = () => {
@@ -36,8 +66,4 @@ const reset = () => {
 const backspace = () => {
   // this only works once and for firstVal only
   display.innerHTML = state.firstVal.slice(0, (state.firstVal.length - 1));
-}
-
-const equal = () => {
-  console.log(`equal`);
 }
