@@ -48,11 +48,18 @@ const equal = (value) => {
     console.log(`v`, num1, num2);
 
     subtotal = parseFloat(num1 + num2);
-    console.log(`sub`, subtotal);
+  } else if (state.operation === "-") {
+    subtotal = parseFloat(num1 - num2);
+  } else if (state.operation === "*") {
+    subtotal = parseFloat(num1 * num2);
+  } else if (state.operation === "/") {
+    subtotal = parseFloat(num1 / num2);
+  }
 
-    display.innerHTML = subtotal;
-
-  } return subtotal;
+  display.innerHTML = subtotal;
+  state.firstVal = subtotal;
+  console.log(`st`, state.firstVal);
+  return subtotal;
 
 
 }
