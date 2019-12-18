@@ -13,13 +13,19 @@ const buttonPressed = (value) => {
     return
   };
 
+  if (subtotal !== "" && state.operation === undefined) {
+    subtotal = "";
+    state.firstVal = display.innerHTML = value;
+    return state;
+  }
+
   if (state.operation === undefined) {
     state.firstVal = display.innerHTML += value;
   } else if (state.operation !== undefined) {
     state.secondVal = display.innerHTML += value;
   }
 
-  // console.log(`bp`, state, subtotal);
+  // console.log(`bp`, `state`, state, `sub`, subtotal);
   return state;
 }
 
@@ -30,7 +36,7 @@ const operator = (value) => {
     state.operation = value;
   }
 
-  // console.log(`op`, state);
+  // console.log(`op`, `state`, state, `sub`, subtotal);
   return state;
 }
 
@@ -53,7 +59,7 @@ const equal = (value) => {
   state.secondVal = "";
   state.operation = undefined;
 
-  // console.log(`eq`, state, subtotal);
+  // console.log(`eq`, `state`, state, `sub`, subtotal);
   return subtotal;
 }
 
@@ -80,7 +86,6 @@ const backspace = () => {
 }
 
 const negate = () => {
-  // this works but only at the start
   let num1 = Number(state.firstVal);
   let num2 = Number(state.secondVal);
 
@@ -100,6 +105,6 @@ const negate = () => {
     state.secondVal = display.innerHTML;
   }
 
-  // console.log('negate', state.firstVal, state.secondVal);
+  // console.log('negate', `state`, state, `sub`, subtotal, display.innerHTML);
   return state;
 }
