@@ -13,33 +13,13 @@ const buttonPressed = (value) => {
     return
   };
 
-  /* if (subtotal !== "" && state.operation === undefined) {
-    display.innerHTML = "";
-    state.firstVal = "";
-  } */
-
-  // Best version so far
   if (state.operation === undefined) {
     state.firstVal = display.innerHTML += value;
   } else if (state.operation !== undefined) {
     state.secondVal = display.innerHTML += value;
   }
 
-  /* something in here works
-    if (subtotal !== "" && state.firstVal !== "") {
-      display.innerHTML = "";
-      state.firstVal = display.innerHTML = +value;
-      state.secondVal = "";
-      state.operation = undefined;
-      console.log(`inside 2ndval`, state, subtotal);
-    }
-    // need an else if? 
-
-   return state;
-  } */
-
-  console.log(`bp`, state, subtotal);
-
+  // console.log(`bp`, state, subtotal);
   return state;
 }
 
@@ -50,7 +30,7 @@ const operator = (value) => {
     state.operation = value;
   }
 
-  console.log(`op`, state);
+  // console.log(`op`, state);
   return state;
 }
 
@@ -73,8 +53,7 @@ const equal = (value) => {
   state.secondVal = "";
   state.operation = undefined;
 
-  console.log(`eq`, state, subtotal);
-
+  // console.log(`eq`, state, subtotal);
   return subtotal;
 }
 
@@ -87,8 +66,15 @@ const reset = () => {
 }
 
 const backspace = () => {
-  // this only works once and for firstVal only
-  display.innerHTML = state.firstVal.slice(0, (state.firstVal.length - 1));
+  if (display.innerHTML === state.firstVal) {
+    display.innerHTML = state.firstVal.slice(0, -1);
+    state.firstVal = display.innerHTML;
+  }
+
+  if (display.innerHTML === state.secondVal) {
+    display.innerHTML = state.secondVal.slice(0, -1);
+    state.secondVal = display.innerHTML;
+  }
 
   return state;
 }
@@ -114,7 +100,6 @@ const negate = () => {
     state.secondVal = display.innerHTML;
   }
 
-  console.log('negate', state.firstVal, state.secondVal);
-
+  // console.log('negate', state.firstVal, state.secondVal);
   return state;
 }
