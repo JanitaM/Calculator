@@ -45,13 +45,13 @@ const equal = (value) => {
   let num2 = Number(state.secondVal);
 
   if (state.operation === "+") {
-    subtotal = parseFloat(num1 + num2);
+    subtotal = parseFloat(num1 + num2).toFixed(5);
   } else if (state.operation === "-") {
-    subtotal = parseFloat(num1 - num2);
+    subtotal = parseFloat(num1 - num2).toFixed(5);
   } else if (state.operation === "*") {
-    subtotal = parseFloat(num1 * num2);
+    subtotal = parseFloat(num1 * num2).toFixed(5);
   } else if (state.operation === "/") {
-    subtotal = parseFloat(num1 / num2);
+    subtotal = parseFloat(num1 / num2).toFixed(5);
   }
 
   display.innerHTML = subtotal;
