@@ -104,35 +104,23 @@ const negate = () => {
   let num2 = Number(state.secondVal);
 
   // If the current state.firstVal is less than 0, times by 1 to make it positive. If it's greater than 0, times by -1 to make it negative. I think this is backwards but it works
-  // KEEP THIS!!!!
-  /*
-  if (display.innerHTML === state.firstVal && num1 < 0) {
-    display.innerHTML = parseFloat(num1 * (-1));
-    state.firstVal = display.innerHTML;
-  } else if (display.innerHTML === state.firstVal && num1 > 0) {
-    display.innerHTML = parseFloat(num1 * (-1));
-    state.firstVal = display.innerHTML;
-  }
-*/
-  if (display.innerHTML === state.firstVal && num1 < 0) {
-    display.innerHTML = parseFloat(num1 * (-1));
-    state.firstVal = display.innerHTML;
-  } else if (display.innerHTML === state.firstVal && num1 > 0) {
+  // KEEP THIS !!!
+  if (display.innerHTML === state.firstVal && num1 > 0) {
     display.innerHTML = parseFloat(num1 * (-1));
     state.firstVal = display.innerHTML;
   }
 
-
-
-
-
-
-  if (display.innerHTML === state.secondVal && num2 < 0) {
-    display.innerHTML = parseFloat(num2 * (1));
-    state.secondVal = display.innerHTML;
-  } else if (display.innerHTML === state.secondVal && num2 > 0) {
+  if (display.innerHTML === state.secondVal && num2 > 0) {
     display.innerHTML = parseFloat(num2 * (-1));
     state.secondVal = display.innerHTML;
+  }
+
+  if (subtotal < 0) {
+    display.innerHTML = parseFloat(display.innerHTML * (-1));
+    state.firstVal = display.innerHTML;
+  } else if (subtotal > 0) {
+    display.innerHTML = parseFloat(display.innerHTML * (-1));
+    state.firstVal = display.innerHTML;
   }
 
   console.log('negate', `state`, state, `sub`, subtotal, display.innerHTML);
