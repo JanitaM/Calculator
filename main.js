@@ -1,69 +1,80 @@
+// Clear all values
 let state = {
   firstVal: "",
   secondVal: "",
   operation: undefined
 };
 
+// Save the display to a variable for quicker access
 let display = document.getElementById('display');
-
+// Subtotal at the start is equal to zero/empty string
 let subtotal = "";
 
 const buttonPressed = (value) => {
+  // Allow only one period per display
   if (value === "." && display.innerHTML.includes('.')) {
     return
   };
 
+  // Save the numbers that are pressed into the correct key:value of state
+  if (state.operation === undefined) {
+    display.innerHTML = state.firstVal += value;
+  } else if (state.operation !== undefined && state.firstVal !== "") {
+    display.innerHTML = state.secondVal += value;
+  }
+
+  // If there's a subtotal and a number is pressed, clear subtotal and save the value to state.firstVal
   if (subtotal !== "" && state.operation === undefined) {
     subtotal = "";
     state.firstVal = display.innerHTML = value;
     return state;
   }
 
-  if (state.operation === undefined) {
-    state.firstVal = display.innerHTML += value;
-  } else if (state.operation !== undefined) {
-    state.secondVal = display.innerHTML += value;
-  }
-
-  // console.log(`bp`, `state`, state, `sub`, subtotal);
+  console.log(`bp`, `state`, state, `sub`, subtotal);
   return state;
 }
 
 const operator = (value) => {
-  display.innerHTML = "";
-
+  // If any of these values are pressed, save the value to state.operation
   if (value === "+" || value === "-" || value === "*" || value === "/") {
     state.operation = value;
   }
 
-  // console.log(`op`, `state`, state, `sub`, subtotal);
+  console.log(`op`, `state`, state, `sub`, subtotal);
   return state;
 }
 
 const equal = (value) => {
+  // Get the values from state and save them to number variables
   let num1 = Number(state.firstVal);
   let num2 = Number(state.secondVal);
 
+  // Do the operation that matches the current state.operation, turn the string into a floating point number
   if (state.operation === "+") {
-    subtotal = parseFloat(num1 + num2).toFixed(5);
+    subtotal = parseFloat(num1 + num2);
   } else if (state.operation === "-") {
-    subtotal = parseFloat(num1 - num2).toFixed(5);
+    subtotal = parseFloat(num1 - num2);
   } else if (state.operation === "*") {
-    subtotal = parseFloat(num1 * num2).toFixed(5);
+    subtotal = parseFloat(num1 * num2);
   } else if (state.operation === "/") {
-    subtotal = parseFloat(num1 / num2).toFixed(5);
+    subtotal = parseFloat(num1 / num2);
   }
 
+  // Set the display value to subtotal for future use
   display.innerHTML = subtotal;
+  // Set the state.firstVal to subtotal to start a new operation
   state.firstVal = subtotal;
+  // Clear the value of state.secondVal
   state.secondVal = "";
+  // Clear the value of state.operation
   state.operation = undefined;
 
-  // console.log(`eq`, `state`, state, `sub`, subtotal);
+  console.log(`eq`, `state`, state, `sub`, subtotal);
   return subtotal;
 }
 
 const reset = () => {
+  // When you call the reset function, clear all values
   state.firstVal = "";
   state.secondVal = "";
   state.operation = undefined;
@@ -72,11 +83,13 @@ const reset = () => {
 }
 
 const backspace = () => {
+  // If the display is on state.firstVal, remove one number/string off the end
   if (display.innerHTML === state.firstVal) {
     display.innerHTML = state.firstVal.slice(0, -1);
     state.firstVal = display.innerHTML;
   }
 
+  // If the display is on state.secondVal, remove one number/string off the end
   if (display.innerHTML === state.secondVal) {
     display.innerHTML = state.secondVal.slice(0, -1);
     state.secondVal = display.innerHTML;
@@ -86,16 +99,33 @@ const backspace = () => {
 }
 
 const negate = () => {
+  // Get the values from state and save them to number variables
   let num1 = Number(state.firstVal);
   let num2 = Number(state.secondVal);
 
+  // If the current state.firstVal is less than 0, times by 1 to make it positive. If it's greater than 0, times by -1 to make it negative. I think this is backwards but it works
+  // KEEP THIS!!!!
+  /*
   if (display.innerHTML === state.firstVal && num1 < 0) {
-    display.innerHTML = parseFloat(num1 * (1));
+    display.innerHTML = parseFloat(num1 * (-1));
     state.firstVal = display.innerHTML;
   } else if (display.innerHTML === state.firstVal && num1 > 0) {
     display.innerHTML = parseFloat(num1 * (-1));
     state.firstVal = display.innerHTML;
   }
+*/
+  if (display.innerHTML === state.firstVal && num1 < 0) {
+    display.innerHTML = parseFloat(num1 * (-1));
+    state.firstVal = display.innerHTML;
+  } else if (display.innerHTML === state.firstVal && num1 > 0) {
+    display.innerHTML = parseFloat(num1 * (-1));
+    state.firstVal = display.innerHTML;
+  }
+
+
+
+
+
 
   if (display.innerHTML === state.secondVal && num2 < 0) {
     display.innerHTML = parseFloat(num2 * (1));
@@ -105,6 +135,6 @@ const negate = () => {
     state.secondVal = display.innerHTML;
   }
 
-  // console.log('negate', `state`, state, `sub`, subtotal, display.innerHTML);
+  console.log('negate', `state`, state, `sub`, subtotal, display.innerHTML);
   return state;
 }
