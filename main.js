@@ -1,13 +1,13 @@
-// Clear all values
+// Clear all values at the start
 let state = {
   firstVal: "",
   secondVal: "",
   operation: undefined
 };
 
-// Save the display to a variable for quicker access
+// Save the display text to a variable for quicker access
 let display = document.getElementById('display');
-// Subtotal at the start is equal to zero/empty string
+// Subtotal at the start is empty
 let subtotal = "";
 
 const buttonPressed = (value) => {
@@ -16,21 +16,20 @@ const buttonPressed = (value) => {
     return
   };
 
-  // Save the numbers that are pressed into the correct key:value of state
+  // Save the pressed numbers into the correct key:value of state
   if (state.operation === undefined) {
     display.innerHTML = state.firstVal += value;
   } else if (state.operation !== undefined && state.firstVal !== "") {
+    subtotal = "";
     display.innerHTML = state.secondVal += value;
   }
 
-  // If there's a subtotal and a number is pressed, clear subtotal and save the value to state.firstVal
+  // If there's a subtotal and a number is pressed, save the value to state.firstVal
   if (subtotal !== "" && state.operation === undefined) {
-    subtotal = "";
     state.firstVal = display.innerHTML = value;
     return state;
   }
 
-  console.log(`bp`, `state`, state, `sub`, subtotal);
   return state;
 }
 
@@ -40,7 +39,6 @@ const operator = (value) => {
     state.operation = value;
   }
 
-  console.log(`op`, `state`, state, `sub`, subtotal);
   return state;
 }
 
@@ -69,12 +67,11 @@ const equal = (value) => {
   // Clear the value of state.operation
   state.operation = undefined;
 
-  console.log(`eq`, `state`, state, `sub`, subtotal);
   return subtotal;
 }
 
 const reset = () => {
-  // When you call the reset function, clear all values
+  // Clear all values
   state.firstVal = "";
   state.secondVal = "";
   state.operation = undefined;
@@ -103,26 +100,34 @@ const negate = () => {
   let num1 = Number(state.firstVal);
   let num2 = Number(state.secondVal);
 
-  // If the current state.firstVal is less than 0, times by 1 to make it positive. If it's greater than 0, times by -1 to make it negative. I think this is backwards but it works
-  // KEEP THIS !!!
+  // If the current state.firstVal is less than 0, times by negative 1 to make it positive. If it's greater than 0, times by 1 to make it negative.
   if (display.innerHTML === state.firstVal && num1 > 0) {
     display.innerHTML = parseFloat(num1 * (-1));
     state.firstVal = display.innerHTML;
+  } if (display.innerHTML === state.firstVal && num1 < 0) {
+    display.innerHTML = parseFloat(num1 * (1));
+    state.firstVal = display.innerHTML;
   }
 
+  // Do the same for state.secondVal
   if (display.innerHTML === state.secondVal && num2 > 0) {
     display.innerHTML = parseFloat(num2 * (-1));
     state.secondVal = display.innerHTML;
+  } else if (display.innerHTML === state.secondVal && num2 < 0) {
+    display.innerHTML = parseFloat(num2 * (1));
+    state.secondVal = display.innerHTML;
   }
 
+  // Do the same for subtotal
   if (subtotal < 0) {
     display.innerHTML = parseFloat(display.innerHTML * (-1));
-    state.firstVal = display.innerHTML;
+    subtotal = display.innerHTML;
+    state.firstVal = subtotal;
   } else if (subtotal > 0) {
-    display.innerHTML = parseFloat(display.innerHTML * (-1));
-    state.firstVal = display.innerHTML;
+    display.innerHTML = parseFloat(display.innerHTML * (1));
+    subtotal = display.innerHTML;
+    state.firstVal = subtotal;
   }
 
-  console.log('negate', `state`, state, `sub`, subtotal, display.innerHTML);
   return state;
 }
